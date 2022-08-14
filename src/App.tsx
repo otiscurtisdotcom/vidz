@@ -58,11 +58,8 @@ const App = () => {
     const video = document.querySelector('video')!;
     video.remove();
     
-    console.log(`number left: `, document.querySelectorAll('video').length);
-
     // Get another batch if running low...
     if (document.querySelectorAll('video').length === 2 || vids && vids.length < 2) {
-      console.log('grabbing more');
       getTen();
     }
 
