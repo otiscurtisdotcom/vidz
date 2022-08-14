@@ -22,6 +22,7 @@ interface Item {
 }
 
 const App = () => {
+  const [clicked, setClicked] = useState(false);
   const [started, setStarted] = useState(false);
   const [loadingBar, setLoadingBar] = useState(0);
   const [mouseDown, setMouseDown] = useState(false);
@@ -113,6 +114,11 @@ const App = () => {
     }
   }, [loadedCount]);
 
+  useEffect(()=> {
+    const img = new Image();
+    img.src = `${process.env.PUBLIC_URL}/img/cursor-pressed.png`;
+  }, [])
+
   return (
     <main
       style={{
@@ -122,10 +128,13 @@ const App = () => {
       onMouseDown={() => setMouseDown(true)}
       onMouseUp={() => setMouseDown(false)}
       onClick={() => {
-        if (!started) {
+        if (!clicked) {
           getTen();
+          setClicked(true);
         } else {
-          changeChannel();
+          if (started) {
+            changeChannel();
+          }
         }
       }}
     >
@@ -135,23 +144,20 @@ const App = () => {
         </div>
       }
 
-      <div className="vid">
-        <div
-          className="vidbucket"
-          style={started ? {
-            backgroundImage: `url("${process.env.PUBLIC_URL}/img/static.gif")`
-          } : {}}
-        >
-          {!started &&
-            <p>Click anywhere to change the channel</p>
-          }
-          {videoPlayers()}
-        </div>
+      <div
+        className="vidbucket"
+        style={started ? {
+          backgroundImage: `url("${process.env.PUBLIC_URL}/img/static.gif")`
+        } : {}}
+      >
+        {!started &&
+          <p>Click anywhere to change the channel</p>
+        }
+        {videoPlayers()}
         <span className={`button ${mouseDown ? 'pressed' : ''}`}>
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15 15"><path d="M10.5 1.674V4a5 5 0 0 1-3 9 5 5 0 0 1-3-9V1.674a7 7 0 1 0 6 0z"/><path d="M8.5 7.003V.997A.996.996 0 0 0 7.5 0c-.553 0-1 .453-1 .997v6.006c0 .551.444.997 1 .997.553 0 1-.453 1-.997z"/></svg>
         </span>
       </div>
-
     </main>
   );
 }
