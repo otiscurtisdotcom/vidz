@@ -21,7 +21,6 @@ main {
   display: flex;
   height: 600px;
   justify-content: center;
-  overflow: hidden;
   position: relative;
   width: 800px;
 
@@ -113,7 +112,7 @@ main {
 
   .button {
     border-radius: 4px;
-    bottom: -10px;
+    bottom: -18px;
     height: 30px;
     left: 18px;
     width: 30px;
